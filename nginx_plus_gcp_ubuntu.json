@@ -5,8 +5,8 @@
       "region": "australia-southeast1",
       "zone": "australia-southeast1-a",
       "purpose": "nginx-plus-nap-r22",
-      "image_family": "debian-9",
-      "project_id": "Your-GCP-Project-Id"
+      "image_family": "ubuntu-1804-lts",
+      "project_id": "Your_GCP_Project_Id"
     },
     "builders": [
       {
@@ -14,11 +14,11 @@
         "type": "googlecompute",
         "project_id": "{{user `project_id`}}",
         "machine_type": "{{user `machine_type`}}",
-        "image_family": "nplus-gwy-nap-debian-9",
+        "image_family": "nplus-gwy-nap-ubuntu-1804",
         "source_image_family": "{{user `image_family`}}",
         "region": "{{user `region`}}",
         "zone": "{{user `zone`}}",
-        "image_description": "NGINX Plus R22 & App Protect on Debian 9",
+        "image_description": "NGINX Plus R22 & App Protect on Ubuntu 18.04",
         "image_name": "{{user `purpose`}}",
         "disk_size": 16,
         "disk_type": "pd-ssd",
@@ -31,7 +31,7 @@
       {
         "type": "file",
         "source": "etc",
-        "destination": "/tmp",
+        "destination": "/tmp/",
         "only": [
           "ngx-plus"
         ]

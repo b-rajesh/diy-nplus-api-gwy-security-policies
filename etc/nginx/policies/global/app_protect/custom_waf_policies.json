@@ -1,0 +1,47 @@
+{
+    "policy": {
+        "name": "app_protect_custom_policy",
+        "template": { "name": "POLICY_TEMPLATE_NGINX_BASE" },
+        "applicationLanguage": "utf-8",
+        "enforcementMode": "blocking",
+        "response-pages": [
+            {
+                "responseContent": "{\"Custom WAF Block Response\":{\"supportid\"=\"<%TS.request.ID()%>\"}}\n",
+                "responseHeader": "HTTP/1.1 302 OK\\r\\nCache-Control: no-cache\\r\\nPragma: no-cache\\r\\nConnection: close",
+                "responseActionType": "custom",
+                "responsePageType": "default"
+            }
+        ],
+        "blocking-settings": {
+            "violations": [
+                {
+                    "name": "VIOL_EVASION",
+                    "alarm": true,
+                    "block": true
+                },
+                {
+                    "name": "VIOL_HTTP_PROTOCOL",
+                    "alarm": true,
+                    "block": true
+                },
+                {
+                    "name": "VIOL_JSON_FORMAT",
+                    "alarm": true,
+                    "block": true
+                },
+                {
+                  "name": "VIOL_THREAT_CAMPAIGN",
+                  "alarm": true,
+                  "block": true
+                }
+            ]
+        },
+        "data-guard": {
+            "enabled": true,
+            "maskData": true,
+            "creditCardNumbers": true,
+            "enforcementMode": "ignore-urls-in-list",
+            "enforcementUrls": []            
+        }
+    }
+}

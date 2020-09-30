@@ -7,7 +7,6 @@ echo "Copying nginx keys to /etc/ssl/ ...."
 sudo mv /tmp/etc/ssl/nginx /etc/ssl/
 sudo chown  root:root -R /etc/ssl/nginx/
 sudo chmod  777 -R /etc/ssl/nginx/
-
 sudo wget https://nginx.org/keys/nginx_signing.key
 sudo apt-key add nginx_signing.key
 sudo apt-get -y install apt-transport-https lsb-release ca-certificates wget
@@ -28,4 +27,4 @@ sudo chown  root:root -R /etc/nginx/
 sudo chmod  777 -R /etc/nginx/
 sudo nginx -t -c /etc/nginx/nginx.conf
 echo "Restarting nginx ...."
-sudo service nginx restart
+#sudo service nginx restart
