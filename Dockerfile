@@ -10,34 +10,19 @@ COPY etc/ssl/nginx/nginx-repo.key /etc/ssl/nginx/
 # Install NGINX Plus
 RUN set -x \
   && apt-get update && apt-get upgrade -y \
-  && apt-get install --no-install-recommends --no-install-suggests -y apt-transport-https ca-certificates gnupg1 \
-  && \
-  NGINX_GPGKEY=573BFD6B3D8FBC641079A6ABABF5BD827BD9BF62; \
-  found=''; \
-  for server in \
-    ha.pool.sks-keyservers.net \
-    hkp://keyserver.ubuntu.com:80 \
-    hkp://p80.pool.sks-keyservers.net:80 \
-    pgp.mit.edu \
-  ; do \
-    echo "Fetching GPG key $NGINX_GPGKEY from $server"; \
-    apt-key adv --keyserver "$server" --keyserver-options timeout=10 --recv-keys     "$NGINX_GPGKEY" && found=yes && break; \
-  done; \
-  test -z "$found" && echo >&2 "error: failed to fetch GPG key $NGINX_GPGKEY" && exit 1; \
-  echo "Acquire::https::plus-pkgs.nginx.com::Verify-Peer \"true\";" >> /etc/apt/apt.conf.d/90nginx \
-  && echo "Acquire::https::plus-pkgs.nginx.com::Verify-Host \"true\";" >> /etc/apt/apt.conf.d/90nginx \
-  && echo "Acquire::https::plus-pkgs.nginx.com::SslCert     \"/etc/ssl/nginx/nginx-repo.crt\";" >> /etc/apt/apt.conf.d/90nginx \
-  && echo "Acquire::https::plus-pkgs.nginx.com::SslKey      \"/etc/ssl/nginx/nginx-repo.key\";" >> /etc/apt/apt.conf.d/90nginx \
-  && printf "deb https://plus-pkgs.nginx.com/debian stretch nginx-plus\n" > /etc/apt/sources.list.d/nginx-plus.list \
-  && apt-get update && apt-get install -y nginx-plus \
-  && apt-get remove --purge --auto-remove -y gnupg1 \
+  && apt-get install --no-install-recommends --no-install-suggests -y apt-transport-https lsb-release ca-certificates wget gnupg2 \
+  && wget https://cs.nginx.com/static/keys/nginx_signing.key && apt-key add nginx_signing.key \
+  && printf "deb https://plus-pkgs.nginx.com/debian `lsb_release -cs` nginx-plus\n" | tee /etc/apt/sources.list.d/nginx-plus.list \
+  && wget -P /etc/apt/apt.conf.d https://cs.nginx.com/static/files/90nginx \
   ## Install NGINX Plus Modules from repo
+  && apt-get update && apt-get install -y nginx-plus \
+  && apt-get remove --purge --auto-remove -y gnupg2 \
   # See https://www.nginx.com/products/nginx/modules
   # Required for this demo:
   && apt-get install -y nginx-plus-module-njs \
   && apt-get install -y app-protect \
   && apt-get install -y nginx-plus-module-opentracing \
-  && apt-get install nginx-plus-module-headers-more \
+  && apt-get install -y nginx-plus-module-headers-more \
   # Optional, not required:
   #&& apk add nginx-plus-module-modsecurity \
   #&& apk add nginx-plus-module-geoip \
@@ -59,6 +44,7 @@ RUN chown -R nginx:nginx /etc/nginx \
  && ln -sf /dev/stdout /var/log/nginx/access.log \
  && ln -sf /dev/stderr /var/log/nginx/error.log
 COPY entrypoint.sh  ./
+RUN rm -rf /etc/ssl/nginx
 RUN chmod -R 755 /etc/nginx 
 
 # EXPOSE ports, HTTP 80, HTTPS 443 and, Nginx status page 8080

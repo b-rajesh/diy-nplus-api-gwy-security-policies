@@ -15,16 +15,16 @@
 
 ```bash
 # To build the Docker image : Run command from the folder containing the `Dockerfile`
-$ docker build -t nginx-plus-api-gateway-simple .
+$ docker build -t nginx-plus-api-gateway-nap .
 # If you made changes to the Dockerfile and need to rebuild you probably need to use--no-cache
-$ docker build -t nginx-plus-api-gateway-simple . --no-cache
+$ docker build -t nginx-plus-api-gateway-nap . --no-cache
 ```
 
 ### Start the Nginx Plus container :
 
 ```bash
 # Start a new container and publish container ports 80 (HTTP), 443 (HTTPS), 8000 (Demo instructions) and 8080 (NGINX Plus Dashboard) to the host
-$ docker run --name mynginxplus_simple  -p 80:80 -p 443:443 -p 8080:8080 -p 8000:8000 -p 9000:9000 -d nginx-plus-api-gateway-simple
+$ docker run --name mynginxplus_simple  -p 80:80 -p 443:443 -p 8080:8080 -p 8000:8000 -p 9000:9000 -d nginx-plus-api-gateway-nap
 ```
 
 ### Access NGiNX Plus Dashbaord :
