@@ -1,7 +1,7 @@
 {
     "description": "Create an NGINX Plus Image with App Protect using diy-nginx-plus-api-gateway-security-policies",
     "variables": {
-      "machine_type": "f1-micro",
+      "machine_type": "e2-standard-2",
       "region": "australia-southeast1",
       "zone": "australia-southeast1-a",
       "purpose": "nginx-plus-nap-r22",

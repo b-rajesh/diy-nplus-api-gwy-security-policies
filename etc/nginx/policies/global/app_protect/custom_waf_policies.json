@@ -3,7 +3,7 @@
         "name": "app_protect_custom_policy",
         "template": { "name": "POLICY_TEMPLATE_NGINX_BASE" },
         "applicationLanguage": "utf-8",
-        "enforcementMode": "blocking",
+        "enforcementMode": "transparent",
         "response-pages": [
             {
                 "responseContent": "{\"Custom WAF Block Response\":{\"supportid\"=\"<%TS.request.ID()%>\"}}\n",
@@ -16,11 +16,6 @@
             "violations": [
                 {
                     "name": "VIOL_EVASION",
-                    "alarm": true,
-                    "block": true
-                },
-                {
-                    "name": "VIOL_HTTP_PROTOCOL",
                     "alarm": true,
                     "block": true
                 },
