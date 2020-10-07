@@ -56,6 +56,9 @@ sudo apt-get -y update && sudo apt-get install -y app-protect-attack-signatures
 echo "Installing Threat campaigns..." 
 sudo apt-get -y update && sudo apt-get install -y app-protect-threat-campaigns
 
+echo "Removing nginx keys..."
+sudo rm -rf  /etc/ssl/nginx/
+
 echo "Verifying nginx config...."
 sudo nginx -t -c /etc/nginx/nginx.conf
 
