@@ -8,7 +8,13 @@
    2. If you are planning to run nginx oss as apigateway then you don't need nginx plus license, however you will have to inspect the conf files inside to remove 
    certain directive which pertains to nginx plus. I have highlighted those directives with comments in the conf files.
 ```
-
+## To build image for GCP using packer.
+```
+   1. Enter your Google Project ID here https://github.com/b-rajesh/diy-nplus-api-gwy-security-policies/blob/master/nginx_plus_gcp_ubuntu.json
+   2. Enter image name(purpose) appropriately here in this file https://github.com/b-rajesh/diy-nplus-api-gwy-security-policies/blob/master/nginx_plus_gcp_ubuntu.json
+   3. Run this command in the command line prompt -->  packer build nginx_plus_gcp_ubuntu.json
+   4. Verify the image in the GCP console under images and note down the image name to refer it here https://github.com/b-rajesh/gcp-nginx-plus-with-nlb/blob/master/terraform.tfvars --> nginx_plus_image_name_on_gcp
+```
 ## Run NGINX Plus docker container
 
 ### Build an image from your Dockerfile :
